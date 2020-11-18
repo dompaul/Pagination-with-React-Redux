@@ -1,0 +1,24 @@
+.select {
+    background-color: $primary-blue;
+    background-image: url( '../images/select.png' );
+    background-repeat: no-repeat;
+    background-position: center right 1.2rem;
+    background-size: .8rem;
+    border: none;
+    font-size: 1.6rem;
+    color: $white;
+    font-family: $font-family;
+    padding: 1rem 2.8rem 1rem 1.6rem;
+    font-weight: $bold;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+
+    @media ( -webkit-min-device-pixel-ratio: 2 ), ( min-resolution: 192dpi ) {
+        background-image: url( '../images/select@2x.png' );
+    }
+
+    @media ( -webkit-min-device-pixel-ratio: 3 ) {
+        background-image: url( '../images/select@3x.png' );
+    }
+}
