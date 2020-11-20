@@ -6,16 +6,14 @@ import React from 'react';
  */
 const Button = ( props ) => {
 
-    const { isLoaded, error } = props.state;
+    const { isFetching, error, classes, page, disabled, text } = props;
 
-    if ( error || !isLoaded ) {
+    if ( error || isFetching ) {
         return null;
     }
 
     return (
-        <button onClick={ props.event.bind( this ) } className={ props.classes }>
-            { props.text }
-        </button>
+        <button className={ classes } onClick={ props.callback.bind( this, page ) } disabled={ disabled }></button>
     );
 }
 

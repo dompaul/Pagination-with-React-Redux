@@ -1,74 +1,18 @@
 .app {
-    padding: 2.4rem 8rem 2.4rem 2.4rem;
+    max-width: 80rem;
+    margin: auto;
 
     &__header {
         width: 100%;
     }
 
-    &__logo {
-        display: inline-block;
-    }
-
-    &__logo-image {
-        width: 17.8rem;
-        height: 2.2rem;
-    }
-
-    &__logo-txt {
-        font-size: 2rem;
-        color: rgba($font-color, .9);
-        font-weight: $regular;
-        font-family: $font-family;
-        text-transform: uppercase;
-        display: inline-block;
-        transform: translateX(-1.5rem);
-        letter-spacing: .15rem;
-    }
-
-    &__body {
-        padding-top: 5.6rem;
-        display: flex;
-    }
-
-    &__image-container {
-        margin-top: 8.1rem;
-    }
-
-    &__launches {
-        flex: 1;
-        padding-left: 5.9rem;
-    }
-
-    &__filters {
-        display: flex;
-        justify-content: flex-end;
-    }
 
     @media (max-width: $breakpoint-wide) {
 
-        &__main-image {
-            max-width: 40rem;
-        }
+
     }
 
     @media (max-width: $breakpoint-desktop) {
-        padding: 3.5rem 2.4rem 2.4rem;
 
-        &__main-image {
-            display: none;
-        }
-
-        &__launches {
-            padding-left: 0;
-        }
-
-        &__logo-image {
-            width: 13rem;
-            height: 1.8rem;
-        }
-
-        &__logo-txt {
-            font-size: 1.6rem;
-        }
     }
 }

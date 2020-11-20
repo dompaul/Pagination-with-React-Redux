@@ -4,10 +4,12 @@ import launchHomeImageX2 from '../assets/images/launch-home@2x.png';
 import launchHomeImageX3 from '../assets/images/launch-home@3x.png';
 
 const CONSTANTS = {
-    LOGO: logo,
-    SPACE_X_IMAGE: launchHomeImage,
-    SPACE_X_RETINA_IMAGES: `${launchHomeImage} 1x, ${launchHomeImageX2} 2x, ${launchHomeImageX3} 3x`,
-    SPACE_X_API: 'https://api.spacexdata.com/v3/launches'
+    LABELS: {
+        ERROR: 'Sorry, there has been an error trying to load the data.',
+        LOADING: 'Loading...',
+        SHOWING: 'Showing',
+        RESULTS: 'results'
+    }
 };
 
 export default CONSTANTS;

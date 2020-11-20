@@ -4,7 +4,9 @@ const fetchReducer = ( state = {
     error: false,
     page: 1,
     pageSize: 20,
-    maxPage: 0
+    maxPage: 0,
+    count: 0,
+    search: false
 }, action ) => {
     switch ( action.type ) {
         case 'FINISHED_FETCHING':
@@ -13,6 +15,22 @@ const fetchReducer = ( state = {
                 items: action.payload,
                 isFetching: false,
                 page: action.payload.page
+            }
+            break;
+        case 'FINISHED_SEARCH':
+            state = {
+                ...state,
+                isFetching: false,
+                search: true,
+                items: action.payload,
+                page: action.payload.page,
+                searchValue: action.payload.searchValue
+            }
+            break;
+        case 'SET_COUNT':
+            state = {
+                ...state,
+                count: action.payload
             }
             break;
         case 'SET_MAX_PAGE':

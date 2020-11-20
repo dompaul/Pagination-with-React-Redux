@@ -3,12 +3,13 @@ html {
 }
 
 body {
-    background: $white;
+    background: #00695C;
     color: $font-color;
     font-size: 1.4rem;
     overflow-x: hidden;
     margin: 0;
     font-family: $font-family;
+    padding: 2rem;
 }
 
 * {
@@ -39,4 +40,22 @@ ul {
     li {
         list-style-type: none;
     }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+li,
+span,
+button,
+time,
+dl,
+dt,
+dd { // Add font smoothing to all text, forces smoother rendering of text
+    -webkit-font-smoothing: antialiased;
 }

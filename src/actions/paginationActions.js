@@ -18,3 +18,10 @@ export function maxPageAction( maxPage ) {
         payload: maxPage
     }
 }
+
+export function setCountAction( count ) {
+    return {
+        type: 'SET_COUNT',
+        payload: count
+    }
+}
