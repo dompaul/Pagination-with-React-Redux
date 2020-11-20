@@ -1,0 +1,14 @@
+.loading {
+    animation: loading 5s infinite;
+    font-size: 5rem;
+}
+
+@keyframes loading {
+    from {
+        transform: scale(.8);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}

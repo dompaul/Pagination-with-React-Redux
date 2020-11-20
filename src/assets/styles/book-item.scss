@@ -1,0 +1,35 @@
+.book-item {
+    position: relative;
+    display: block;
+    padding: 4rem;
+    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 .5rem rgba($black, .08);
+    background-color: $white;
+    border-bottom: solid .1rem rgba($black, .08);
+
+    &__label {
+        font-size: 1.8rem;
+        font-weight: $bold;
+
+        &--alt {
+            font-weight: $light;
+            color: rgba($black, .85);
+        }
+
+        &--italic {
+            font-style: italic;
+            font-size: 1.4rem;
+        }
+    }
+
+    @media (max-width: $breakpoint-wide) {
+
+
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+
+    }
+}
