@@ -1,0 +1,25 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &__page-info {
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+    }
+
+    &__page {
+        color: $white;
+        font-weight: $bold;
+        padding: 0 1rem;
+    }
+
+    &__text {
+        color: $white;
+        font-size: 1.4rem;
+        opacity: .8;
+    }
+}
