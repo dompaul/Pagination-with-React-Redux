@@ -24,12 +24,15 @@
         }
     }
 
-    @media (max-width: $breakpoint-wide) {
-
-
-    }
-
     @media (max-width: $breakpoint-tablet) {
+        padding: 2rem;
 
+        &__label {
+            font-size: 1.4rem;
+
+            &--italic {
+                font-size: 1.2rem;
+            }
+        }
     }
 }

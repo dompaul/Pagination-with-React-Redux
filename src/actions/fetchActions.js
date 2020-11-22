@@ -18,10 +18,12 @@ export function fetchAction( pageNumber, pageSize ) {
             if ( !json.books.length ) {
                 throw new Error( "Sorry, we couldn't find any results " );
             }
-            dispatch( {
-                type: 'FINISHED_FETCHING',
-                payload: { page: pageNumber, ...json }
-            } );
+            setTimeout( () => {
+                dispatch( {
+                    type: 'FINISHED_FETCHING',
+                    payload: { page: pageNumber, ...json }
+                } );
+            }, 300 );
         } )
         .catch( error => {
             dispatch( {
@@ -70,5 +72,12 @@ export function fetchingStateAction( loadingState ) {
     return {
         type: 'IS_FETCHING',
         payload: loadingState
+    }
+}
+
+export function unsetSearchAction() {
+    return {
+        type: 'UNSET_SEARCH',
+        payload: false
     }
 }

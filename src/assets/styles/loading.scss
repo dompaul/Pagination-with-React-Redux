@@ -1,14 +1,21 @@
 .loading {
-    animation: loading 5s infinite;
-    font-size: 5rem;
+    font-size: 3rem;
+
+    &__image {
+        width: 4rem;
+        height: 4rem;
+        animation: loading 5s infinite;
+        margin-right: 1rem;
+        transform: rotate(0);
+    }
 }
 
 @keyframes loading {
     from {
-        transform: scale(.8);
+        transform: rotate(0);
     }
 
     to {
-        transform: scale(1.2);
+        transform: rotate(360deg);
     }
 }

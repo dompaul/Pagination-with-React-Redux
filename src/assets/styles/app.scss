@@ -1,18 +1,13 @@
 .app {
     max-width: 80rem;
     margin: auto;
+    padding-top: 4rem;
 
     &__header {
         width: 100%;
     }
 
-
-    @media (max-width: $breakpoint-wide) {
-
-
-    }
-
-    @media (max-width: $breakpoint-desktop) {
-
+    @media (max-width: $breakpoint-tablet) {
+        padding-top: 2rem;
     }
 }
