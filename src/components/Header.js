@@ -6,7 +6,7 @@ import CONSTANTS from '../common/constants';
 /**
  * Header
  * 
- * 
+ * Renders the header container and details about the pagination/ search results
  * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */

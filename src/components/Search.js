@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Search
  * 
- * 
+ * Renders the search form
  * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */

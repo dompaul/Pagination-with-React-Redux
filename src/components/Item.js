@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Item
  * 
- * 
+ * Renders the listing item
  * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */

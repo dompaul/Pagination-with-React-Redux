@@ -14,7 +14,8 @@ class App extends React.Component {
     /**
      * App
      * 
-     * 
+     * This app queries a paginated endpoint, 
+     * saves the results to Redux and print the results as a list on the page
      * 
      * @constructor 
      */
@@ -27,6 +28,7 @@ class App extends React.Component {
      * componentDidMount
      * 
      * Runs after the component output has been rendered to the DOM
+     * Used to inspect the URL search query and fire-off network requests based on the page number/ search query
      */
     componentDidMount() {
         const params = new URLSearchParams( window.location.search );
@@ -34,63 +36,29 @@ class App extends React.Component {
         const search = this.getSearchQuery( params );
 
         this.props.setFetchingState( true );
-        if ( search ) {
-            this.props.getSearch( search, page );
+        if ( search ) { this.props.getSearch( search, page );
         } else {
             this.props.fetchData( page, CONSTANTS.DEFAULT_PAGE_SIZE );
         }
     }
 
     /**
-     * getPageNumber
-     * 
-     * 
-     * 
-     * @param {Object} params 
-     * @return {Number}
-     */
-    getPageNumber( params ) {
-        return params.get( CONSTANTS.PARAMS.PAGE ) ? params.get( CONSTANTS.PARAMS.PAGE ) : CONSTANTS.DEFAULT_PAGE;
-    }
-
-    /**
-     * getSearchQuery
-     * 
-     * 
-     * 
-     * @param {Object} params 
-     * @return {String}
-     */
-    getSearchQuery( params ) {
-        return params.get( CONSTANTS.PARAMS.SEARCH ) ? params.get( CONSTANTS.PARAMS.SEARCH ) :  null;
-    }
-
-    /**
      * componentDidUpdate
      * 
+     * Invoked immediately after updating occurs
+     * Used to compare current props to previous props and based on the condition,
+     * fire-off network requests
      * 
-     * 
-     * @param {Object} prevProps 
-     * @return {Boolean}
+     * @param {Object} prevProps Previous state of props
+     * @return {Boolean} Exits the function if error prop is true
      */
     componentDidUpdate( prevProps ) {
         const props = this.props;
 
-        if ( props.error ) {
-            return;
-        }
-
-        if ( props.page !== prevProps.page && !props.search ) {
-            this.getNewListing();
-        }
-
-        if ( props.page !== prevProps.page && props.search ) {
-            this.getNewSearchListing();
-        }
-
-        if ( this?.searchRef?.current && props.searchValue ) {
-            this.searchRef.current.value = props.searchValue;
-        }
+        if ( props.error ) return;
+        if ( props.page !== prevProps.page && !props.search ) this.getNewListing();
+        if ( props.page !== prevProps.page && props.search ) this.getNewSearchListing();
+        if ( this?.searchRef?.current && props.searchValue ) this.searchRef.current.value = props.searchValue;
 
         this.updatePageDetails();
         if ( prevProps.search && !props.search && props.searchValue === null ) {
@@ -100,9 +68,33 @@ class App extends React.Component {
     }
 
     /**
+     * getPageNumber
+     * 
+     * Used to get the page number from the URL params
+     * 
+     * @param {Object} params 
+     * @return {Number} Returns the page number stored in the URL
+     */
+    getPageNumber( params ) {
+        return params.get( CONSTANTS.PARAMS.PAGE ) ? params.get( CONSTANTS.PARAMS.PAGE ) : CONSTANTS.DEFAULT_PAGE;
+    }
+
+    /**
+     * getSearchQuery
+     * 
+     * Used to get the Search query from the URL params
+     * 
+     * @param {Object} params 
+     * @return {String} returns the search text stored in the URL
+     */
+    getSearchQuery( params ) {
+        return params.get( CONSTANTS.PARAMS.SEARCH ) ? params.get( CONSTANTS.PARAMS.SEARCH ) :  null;
+    }
+
+    /**
      * getNewListing
      * 
-     * 
+     * Used to fetch a filtered dataset based on the updated prop states (e.g page)
      */
     getNewListing() {
         this.props.setFetchingState( true );
@@ -113,7 +105,7 @@ class App extends React.Component {
     /**
      * getNewSearchListing
      * 
-     * 
+     * Used to fetch a filtered dataset based on the updated prop states (e.g search query)
      */
     getNewSearchListing() {
         this.props.setFetchingState( true );
@@ -124,7 +116,8 @@ class App extends React.Component {
     /**
      * updatePageDetails
      * 
-     * 
+     * Fires-off actions to update the Max page and item count
+     * These props are used in the header for calculating the pagination
      */
     updatePageDetails() {
         const limit = Math.ceil( this.props.items.count / CONSTANTS.DEFAULT_PAGE_SIZE );
@@ -135,16 +128,14 @@ class App extends React.Component {
     /**
      * updateSearchQuery
      * 
+     * Updates the URL search params with updated prop data
      * 
-     * 
-     * @param {Number} page 
-     * @param {String} search 
+     * @param {Number} page Page number
+     * @param {String} search Search query
      */
     updateSearchQuery( page, search = null ) {
         const params = new URLSearchParams( window.location.search );
-        if ( search !== null ) {
-            params.set( CONSTANTS.PARAMS.SEARCH, search );
-        }
+        if ( search !== null ) params.set( CONSTANTS.PARAMS.SEARCH, search );
         params.set( CONSTANTS.PARAMS.PAGE, page );
         window.history.replaceState( {}, '', `${ window.location.pathname }?${ params }` );
     }
@@ -152,9 +143,9 @@ class App extends React.Component {
     /**
      * handleSearchChange
      * 
+     * Handles updating the input value
      * 
-     * 
-     * @param {Event} event 
+     * @param {Event} event Event data 
      */
     handleSearchChange( event ) {
         this.inputValue = event.target.value;
@@ -163,10 +154,11 @@ class App extends React.Component {
     /**
      * onSearch
      * 
+     * Callback fired everytime the search form is submitted
+     * Responsible for calling the getSearch function to obtain a search listing 
      * 
-     * 
-     * @param {Event} event 
-     * @return {Boolean}
+     * @param {Event} event Event data 
+     * @return {Boolean} Exits the function if the input value is empty
      */
     onSearch( event ) {
         event.preventDefault();
@@ -182,7 +174,7 @@ class App extends React.Component {
     /**
      * resetSearch
      * 
-     * 
+     * Called 
      */
     resetSearch() {
         this.props.unsetSearch();
@@ -194,7 +186,7 @@ class App extends React.Component {
     /**
      * render
      * 
-     * 
+     * Examines props and state and returns a react element to render a DOM node
      */
     render() {
         const props = this.props;

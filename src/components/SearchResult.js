@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * SearchResult
  * 
- * 
+ * Renders the search result title
  * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */
