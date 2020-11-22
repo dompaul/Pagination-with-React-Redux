@@ -17,7 +17,6 @@ Install the dependencies and start the server.
 
 ```sh
 $ npm install
-$ yarn start
 ```
 Run the app
 ```sh
