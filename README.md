@@ -11,10 +11,19 @@ This is a create React application that queries a paginated endpoint and uses Re
 - Have a search field that upon request populates the filters param in the endpoint
 
 ### Running the application
+You’ll need to have Node >= 10 on your local development machine 
 
 Install the dependencies and start the server.
 
 ```sh
 $ npm install
 $ yarn start
+```
+Run the app
+```sh
+$ yarn start
+```
+or
+```sh
+$ npm start
 ```
