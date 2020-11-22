@@ -2,7 +2,10 @@ import React from 'react';
 import Item from './Item';
 
 /**
- * Responsible for rendering the wrapper for the LaunchItem component
+ * Listing
+ * 
+ * 
+ * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */
 const Listing = ( props ) => {

@@ -1,7 +1,10 @@
 import React from 'react';
 
 /**
- * Renders the Button component
+ * Button
+ * 
+ * 
+ * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */
 const Button = ( props ) => {

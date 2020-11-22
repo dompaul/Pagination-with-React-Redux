@@ -4,7 +4,10 @@ import SearchResult from './SearchResult';
 import CONSTANTS from '../common/constants';
 
 /**
- * Responsible for rendering the wrapper for the LaunchItem component
+ * Header
+ * 
+ * 
+ * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */
 const Header = ( props ) => {
@@ -27,10 +30,20 @@ const Header = ( props ) => {
         return null;
     }
 
+    /**
+     * getShowingRangeStart
+     * 
+     * 
+     */
     const getShowingRangeStart = () => {
         return page === maxPage ? count - items.length + 1 : ( page * pageSize + 1 ) - items.length;
     }
 
+    /**
+     * getShowingRangeEnd
+     * 
+     * 
+     */
     const getShowingRangeEnd = () => {
         return page === maxPage ? ( count ) : ( page * pageSize );
     }

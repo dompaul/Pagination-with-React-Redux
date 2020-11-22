@@ -11,20 +11,29 @@ import { incrementAction, decrementAction, maxPageAction, setCountAction } from 
 
 class App extends React.Component {
 
+    /**
+     * App
+     * 
+     * 
+     * 
+     * @constructor 
+     */
     constructor() {
         super();
         this.searchRef = React.createRef();
     }
 
     /**
+     * componentDidMount
+     * 
      * Runs after the component output has been rendered to the DOM
      */
     componentDidMount() {
         const params = new URLSearchParams( window.location.search );
-        const page = params.get( CONSTANTS.PARAMS.PAGE ) ? Number( params.get( CONSTANTS.PARAMS.PAGE ) ) : CONSTANTS.DEFAULT_PAGE;
-        const search = params.get( CONSTANTS.PARAMS.SEARCH ) ? params.get( CONSTANTS.PARAMS.SEARCH ) : null;
-        this.props.setFetchingState( true );
+        const page = Number( this.getPageNumber( params ) );
+        const search = this.getSearchQuery( params );
 
+        this.props.setFetchingState( true );
         if ( search ) {
             this.props.getSearch( search, page );
         } else {
@@ -32,56 +41,133 @@ class App extends React.Component {
         }
     }
 
-    componentDidUpdate( prevProps ) {
+    /**
+     * getPageNumber
+     * 
+     * 
+     * 
+     * @param {Object} params 
+     * @return {Number}
+     */
+    getPageNumber( params ) {
+        return params.get( CONSTANTS.PARAMS.PAGE ) ? params.get( CONSTANTS.PARAMS.PAGE ) : CONSTANTS.DEFAULT_PAGE;
+    }
 
-        if ( this.props.error ) {
+    /**
+     * getSearchQuery
+     * 
+     * 
+     * 
+     * @param {Object} params 
+     * @return {String}
+     */
+    getSearchQuery( params ) {
+        return params.get( CONSTANTS.PARAMS.SEARCH ) ? params.get( CONSTANTS.PARAMS.SEARCH ) :  null;
+    }
+
+    /**
+     * componentDidUpdate
+     * 
+     * 
+     * 
+     * @param {Object} prevProps 
+     * @return {Boolean}
+     */
+    componentDidUpdate( prevProps ) {
+        const props = this.props;
+
+        if ( props.error ) {
             return;
         }
 
-        if ( this.props.page !== prevProps.page && !this.props.search ) {
-            this.props.setFetchingState( true );
-            this.props.fetchData( this.props.page, CONSTANTS.DEFAULT_PAGE_SIZE );
-            this.updateSearchQuery( this.props.page );
+        if ( props.page !== prevProps.page && !props.search ) {
+            this.getNewListing();
         }
 
-        if ( this.props.page !== prevProps.page && this.props.search ) {
-            this.props.setFetchingState( true );
-            this.props.getSearch( this.props.searchValue, this.props.page );
-            this.updateSearchQuery( this.props.page, this.props.searchValue );
+        if ( props.page !== prevProps.page && props.search ) {
+            this.getNewSearchListing();
         }
 
-        if ( this?.searchRef?.current && this.props.searchValue ) {
-            this.searchRef.current.value = this.props.searchValue;
+        if ( this?.searchRef?.current && props.searchValue ) {
+            this.searchRef.current.value = props.searchValue;
         }
 
         this.updatePageDetails();
-
-        if ( prevProps.search && !this.props.search && this.props.searchValue === null ) {
-            this.props.setFetchingState( true );
-            this.props.fetchData( CONSTANTS.DEFAULT_PAGE, CONSTANTS.DEFAULT_PAGE_SIZE );
+        if ( prevProps.search && !props.search && props.searchValue === null ) {
+            props.setFetchingState( true );
+            props.fetchData( CONSTANTS.DEFAULT_PAGE, CONSTANTS.DEFAULT_PAGE_SIZE );
         }
-
     }
 
+    /**
+     * getNewListing
+     * 
+     * 
+     */
+    getNewListing() {
+        this.props.setFetchingState( true );
+        this.props.fetchData( this.props.page, CONSTANTS.DEFAULT_PAGE_SIZE );
+        this.updateSearchQuery( this.props.page );
+    }
+
+    /**
+     * getNewSearchListing
+     * 
+     * 
+     */
+    getNewSearchListing() {
+        this.props.setFetchingState( true );
+        this.props.getSearch( this.props.searchValue, this.props.page );
+        this.updateSearchQuery( this.props.page, this.props.searchValue );
+    }
+
+    /**
+     * updatePageDetails
+     * 
+     * 
+     */
     updatePageDetails() {
         const limit = Math.ceil( this.props.items.count / CONSTANTS.DEFAULT_PAGE_SIZE );
         this.props.setMaxPage( limit );
         this.props.setCount( this.props.items.count );
     }
 
+    /**
+     * updateSearchQuery
+     * 
+     * 
+     * 
+     * @param {Number} page 
+     * @param {String} search 
+     */
     updateSearchQuery( page, search = null ) {
         const params = new URLSearchParams( window.location.search );
         if ( search !== null ) {
             params.set( CONSTANTS.PARAMS.SEARCH, search );
         }
-        params.set( CONSTANTS.PARAMS.PAGE, this.props.page );
+        params.set( CONSTANTS.PARAMS.PAGE, page );
         window.history.replaceState( {}, '', `${ window.location.pathname }?${ params }` );
     }
 
+    /**
+     * handleSearchChange
+     * 
+     * 
+     * 
+     * @param {Event} event 
+     */
     handleSearchChange( event ) {
         this.inputValue = event.target.value;
     }
 
+    /**
+     * onSearch
+     * 
+     * 
+     * 
+     * @param {Event} event 
+     * @return {Boolean}
+     */
     onSearch( event ) {
         event.preventDefault();
         if ( !this?.inputValue ) {
@@ -93,16 +179,27 @@ class App extends React.Component {
         this.updateSearchQuery( CONSTANTS.DEFAULT_PAGE, this.inputValue );
     }
 
+    /**
+     * resetSearch
+     * 
+     * 
+     */
     resetSearch() {
         this.props.unsetSearch();
         const params = new URLSearchParams( window.location.search );
-        params.delete( 'search' );
+        params.delete( CONSTANTS.PARAMS.SEARCH );
         window.history.replaceState( {}, '', `${ window.location.pathname }?${ params }` );
     }
 
+    /**
+     * render
+     * 
+     * 
+     */
     render() {
+        const props = this.props;
 
-        if ( this.props.error ) {
+        if ( props.error ) {
             return (
                 <div className='u-overlay'>
                     <span className='u-overlay u-message'>{ CONSTANTS.LABELS.ERROR }</span>
@@ -110,7 +207,7 @@ class App extends React.Component {
             )
         }
 
-        if ( this.props.isFetching ) {
+        if ( props.isFetching ) {
             return (
                 <div className='u-overlay'>
                     <img src={ loader } className="loading__image" alt="Loader" />
@@ -123,28 +220,28 @@ class App extends React.Component {
             <div className='app'>
                 <Search
                     ref={ this.searchRef }
-                    error={ this.props.error }
+                    error={ props.error }
                     onChangeCallback={ this.handleSearchChange.bind( this ) }
                     onSearchCallback={ this.onSearch.bind( this ) }>
                 </Search>
                 <Header
-                    page={ this.props.page }
-                    error={ this.props.error }
-                    isFetching={ this.props.isFetching }
-                    maxPage={ this.props.maxPage }
-                    items={ this.props.items.books }
-                    count={ this.props.count }
-                    pageSize={ this.props.pageSize }
-                    decrementPage={ this.props.decrementPage }
-                    incrementPage={ this.props.incrementPage }
+                    page={ props.page }
+                    error={ props.error }
+                    isFetching={ props.isFetching }
+                    maxPage={ props.maxPage }
+                    items={ props.items.books }
+                    count={ props.count }
+                    pageSize={ props.pageSize }
+                    decrementPage={ props.decrementPage }
+                    incrementPage={ props.incrementPage }
                     clearSearch={ this.resetSearch.bind( this ) }
-                    searchValue={ this.props.searchValue }
-                    search={ this.props.search }>
+                    searchValue={ props.searchValue }
+                    search={ props.search }>
                 </Header>
                 <Listing
-                    error={ this.props.error }
-                    isFetching={ this.props.isFetching }
-                    items={ this.props.items.books }>
+                    error={ props.error }
+                    isFetching={ props.isFetching }
+                    items={ props.items.books }>
                 </Listing>
             </div>
         );

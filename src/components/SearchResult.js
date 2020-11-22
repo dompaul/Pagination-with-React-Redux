@@ -1,7 +1,10 @@
 import React from 'react';
 
 /**
- * Responsible for rendering the wrapper for the LaunchItem component
+ * SearchResult
+ * 
+ * 
+ * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */
 const SearchResult = ( props ) => {

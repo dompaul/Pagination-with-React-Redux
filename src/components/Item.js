@@ -1,7 +1,10 @@
 import React from 'react';
 
 /**
- * Responsible for rendering the Launch Item
+ * Item
+ * 
+ * 
+ * 
  * @param {Object} props Passed-in arguments from the constructor class including the state
  */
 const Item = ( props ) => {
