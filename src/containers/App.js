@@ -188,7 +188,7 @@ class App extends React.Component {
     /**
      * resetSearch
      * 
-     * Called 
+     * Responsible for resetting the current search query
      */
     resetSearch() {
         this.props.unsetSearch();

@@ -33,7 +33,7 @@ const Header = ( props ) => {
     /**
      * getShowingRangeStart
      * 
-     * 
+     * Calculates the start range of pages that have been passed
      */
     const getShowingRangeStart = () => {
         return page === maxPage ? count - items.length + 1 : ( page * pageSize + 1 ) - items.length;
@@ -42,7 +42,7 @@ const Header = ( props ) => {
     /**
      * getShowingRangeEnd
      * 
-     * 
+     * Calculates the total count of items left / pages
      */
     const getShowingRangeEnd = () => {
         return page === maxPage ? ( count ) : ( page * pageSize );
