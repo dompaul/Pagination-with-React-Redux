@@ -1,6 +1,8 @@
+import CONSTANTS from '../common/constants';
+
 export function fetchAction( pageNumber, pageSize ) {
     return dispatch => {
-        fetch( `http://nyx.vima.ekt.gr:3000/api/books`, {
+        fetch( CONSTANTS.API, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -9,7 +11,7 @@ export function fetchAction( pageNumber, pageSize ) {
             body: JSON.stringify( { 'page' : pageNumber, 'itemsPerPage': pageSize } )
         } )
         .then( response => {
-            if ( response.status === 200 ) {
+            if ( response.status === CONSTANTS.STATUS.OK ) {
                 return response.json();
             }
             throw new Error( 'Something went wrong' );
@@ -23,7 +25,7 @@ export function fetchAction( pageNumber, pageSize ) {
                     type: 'FINISHED_FETCHING',
                     payload: { page: pageNumber, ...json }
                 } );
-            }, 300 );
+            }, CONSTANTS.DELAY );
         } )
         .catch( error => {
             dispatch( {
@@ -36,7 +38,7 @@ export function fetchAction( pageNumber, pageSize ) {
 
 export function searchAction( value, pageNumber ) {
     return dispatch => {
-        fetch( `http://nyx.vima.ekt.gr:3000/api/books`, {
+        fetch( CONSTANTS.API, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -45,7 +47,7 @@ export function searchAction( value, pageNumber ) {
             body: JSON.stringify( { 'page': pageNumber, 'filters' : [ { 'type': 'all', 'values': [ value ] } ] } )
         } )
         .then( response => {
-            if ( response.status === 200 ) {
+            if ( response.status === CONSTANTS.STATUS.OK ) {
                 return response.json();
             }
             throw new Error( 'Something went wrong' );

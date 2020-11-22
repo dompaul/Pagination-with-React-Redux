@@ -21,24 +21,26 @@ class App extends React.Component {
      */
     componentDidMount() {
         const params = new URLSearchParams( window.location.search );
-        const page = params.get( 'page' ) ? Number( params.get( 'page' ) ) : 1;
-        const search = params.get( 'search' ) ? params.get( 'search' ) : null;
-
-        // update store
+        const page = params.get( CONSTANTS.PARAMS.PAGE ) ? Number( params.get( CONSTANTS.PARAMS.PAGE ) ) : CONSTANTS.DEFAULT_PAGE;
+        const search = params.get( CONSTANTS.PARAMS.SEARCH ) ? params.get( CONSTANTS.PARAMS.SEARCH ) : null;
         this.props.setFetchingState( true );
 
         if ( search ) {
             this.props.getSearch( search, page );
         } else {
-            this.props.fetchData( page, this.props.pageSize );
+            this.props.fetchData( page, CONSTANTS.DEFAULT_PAGE_SIZE );
         }
     }
 
     componentDidUpdate( prevProps ) {
 
+        if ( this.props.error ) {
+            return;
+        }
+
         if ( this.props.page !== prevProps.page && !this.props.search ) {
             this.props.setFetchingState( true );
-            this.props.fetchData( this.props.page, this.props.pageSize );
+            this.props.fetchData( this.props.page, CONSTANTS.DEFAULT_PAGE_SIZE );
             this.updateSearchQuery( this.props.page );
         }
 
@@ -56,13 +58,13 @@ class App extends React.Component {
 
         if ( prevProps.search && !this.props.search && this.props.searchValue === null ) {
             this.props.setFetchingState( true );
-            this.props.fetchData( 1, this.props.pageSize );
+            this.props.fetchData( CONSTANTS.DEFAULT_PAGE, CONSTANTS.DEFAULT_PAGE_SIZE );
         }
 
     }
 
     updatePageDetails() {
-        const limit = Math.ceil( this.props.items.count / this.props.pageSize );
+        const limit = Math.ceil( this.props.items.count / CONSTANTS.DEFAULT_PAGE_SIZE );
         this.props.setMaxPage( limit );
         this.props.setCount( this.props.items.count );
     }
@@ -70,9 +72,9 @@ class App extends React.Component {
     updateSearchQuery( page, search = null ) {
         const params = new URLSearchParams( window.location.search );
         if ( search !== null ) {
-            params.set( 'search', search );
+            params.set( CONSTANTS.PARAMS.SEARCH, search );
         }
-        params.set( 'page', this.props.page );
+        params.set( CONSTANTS.PARAMS.PAGE, this.props.page );
         window.history.replaceState( {}, '', `${ window.location.pathname }?${ params }` );
     }
 
@@ -87,12 +89,15 @@ class App extends React.Component {
             return;
         }
         this.props.setFetchingState( true );
-        this.props.getSearch( this.inputValue, 1 );
-        this.updateSearchQuery( 1, this.inputValue );
+        this.props.getSearch( this.inputValue, CONSTANTS.DEFAULT_PAGE );
+        this.updateSearchQuery( CONSTANTS.DEFAULT_PAGE, this.inputValue );
     }
 
     resetSearch() {
         this.props.unsetSearch();
+        const params = new URLSearchParams( window.location.search );
+        params.delete( 'search' );
+        window.history.replaceState( {}, '', `${ window.location.pathname }?${ params }` );
     }
 
     render() {
