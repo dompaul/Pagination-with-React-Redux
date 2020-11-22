@@ -10,7 +10,6 @@ import { fetchAction, searchAction, fetchingStateAction, unsetSearchAction } fro
 import { incrementAction, decrementAction, maxPageAction, setCountAction } from '../actions/paginationActions';
 
 class App extends React.Component {
-
     /**
      * App
      * 
@@ -162,13 +161,28 @@ class App extends React.Component {
      */
     onSearch( event ) {
         event.preventDefault();
-        if ( !this?.inputValue ) {
-            this.searchRef.current.value = '';
-            return;
-        }
+        if ( !this?.inputValue ) return;
         this.props.setFetchingState( true );
         this.props.getSearch( this.inputValue, CONSTANTS.DEFAULT_PAGE );
         this.updateSearchQuery( CONSTANTS.DEFAULT_PAGE, this.inputValue );
+    }
+
+    /**
+     * nextPage
+     * 
+     * Responsible for calling the redux action to increment the page number
+     */
+    nextPage() {
+        this.props.incrementPage( this.props.page );
+    }
+
+    /**
+     * prevPage
+     * 
+     * Responsible for calling the redux action to decrement the page number
+     */
+    prevPage() {
+        this.props.decrementPage( this.props.page );
     }
 
     /**
@@ -224,8 +238,8 @@ class App extends React.Component {
                     items={ props.items.books }
                     count={ props.count }
                     pageSize={ props.pageSize }
-                    decrementPage={ props.decrementPage }
-                    incrementPage={ props.incrementPage }
+                    decrementPage={ this.prevPage.bind( this ) }
+                    incrementPage={ this.nextPage.bind( this ) }
                     clearSearch={ this.resetSearch.bind( this ) }
                     searchValue={ props.searchValue }
                     search={ props.search }>

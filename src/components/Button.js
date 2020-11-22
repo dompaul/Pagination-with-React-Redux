@@ -9,14 +9,14 @@ import React from 'react';
  */
 const Button = ( props ) => {
 
-    const { isFetching, error, classes, page, disabled, callback } = props;
+    const { isFetching, error, classes, disabled, callback } = props;
 
     if ( error || isFetching ) {
         return null;
     }
 
     return (
-        <button className={ classes } onClick={ callback.bind( this, page ) } disabled={ disabled }></button>
+        <button data-testid='button' className={ classes } onClick={ callback } disabled={ disabled }></button>
     );
 }
 
