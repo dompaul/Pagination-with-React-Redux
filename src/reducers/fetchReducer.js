@@ -45,6 +45,13 @@ const fetchReducer = ( state = {
                 isFetching: action.payload
             }
             break;
+        case 'UNSET_SEARCH':
+            state = {
+                ...state,
+                search: action.payload,
+                searchValue: null
+            }
+            break;
         case 'ERROR':
             state = {
                 ...state,

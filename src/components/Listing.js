@@ -7,19 +7,7 @@ import Item from './Item';
  */
 const Listing = ( props ) => {
 
-    const { items, isFetching, error } = props;
-
-    if ( error ) {
-        return (
-            <span>Sorry, there has been an error trying to load data.</span>
-        )
-    }
-
-    if ( isFetching ) {
-        return (
-            <span>Loading...</span>
-        )
-    }
+    const { items } = props;
 
     return (
         <ul className="book-list">

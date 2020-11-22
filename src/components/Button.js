@@ -6,7 +6,7 @@ import React from 'react';
  */
 const Button = ( props ) => {
 
-    const { isFetching, error, classes, page, disabled, text } = props;
+    const { isFetching, error, classes, page, disabled } = props;
 
     if ( error || isFetching ) {
         return null;

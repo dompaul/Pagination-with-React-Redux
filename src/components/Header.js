@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from './Button';
+import SearchResult from './SearchResult';
 import CONSTANTS from '../common/constants';
 
 /**
@@ -16,10 +17,13 @@ const Header = ( props ) => {
             items,
             pageSize,
             incrementPage,
-            decrementPage
+            decrementPage,
+            searchValue,
+            search,
+            clearSearch
         } = props;
 
-    if ( error || isFetching ) {
+    if ( error ) {
         return null;
     }
 
@@ -57,6 +61,10 @@ const Header = ( props ) => {
                     disabled={ page === maxPage }>
                 </Button>
             </div>
+            { search
+                ? <SearchResult searchValue={ searchValue } error={ error } clickHandler={ clearSearch }></SearchResult>
+                : null
+            }
         </header>
     );
 }
