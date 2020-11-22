@@ -1,0 +1,46 @@
+.controls {
+
+    &__button {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 4rem;
+        background-color: $white;
+        box-shadow: 0 0 2rem rgba($black, .3);
+        border: none;
+        margin-left: 1rem;
+        cursor: pointer;
+        outline: none;
+        background-size: 3rem 3rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: $white;
+        transition: background-color $transition;
+
+        &:hover {
+            background-color: darken($white, 20%);
+        }
+
+        &:disabled {
+            pointer-events: none;
+            opacity: .1;
+        }
+
+        &--next {
+            background-image: url( '../images/chevron-right.png' );
+        }
+
+        &--prev {
+            background-image: url( '../images/chevron-left.png' );
+        }
+    }
+
+    @media (max-width: $breakpoint-tablet) {
+
+        &__button {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 3rem;
+            background-size: 2rem 2rem;
+        }
+    }
+}
